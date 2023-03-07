@@ -29,6 +29,10 @@ export const moviesSlice = createSlice({
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.list = action.payload;
+      })
+      .addCase(fetchMovies.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });
