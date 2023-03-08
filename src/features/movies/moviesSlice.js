@@ -20,7 +20,11 @@ export const fetchMovies = createAsyncThunk(
 export const moviesSlice = createSlice({
   name: "movies",
   initialState,
-  reducers: {},
+  reducers: {
+    eraseList(state) {
+      state.list = [];
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchMovies.pending, (state, action) => {
@@ -36,6 +40,7 @@ export const moviesSlice = createSlice({
       });
   },
 });
+export const { eraseList } = moviesSlice.actions;
 
 export const movieList = (state) => state.movies.list;
 

@@ -1,14 +1,16 @@
 import { List, StandardListItem } from "@ui5/webcomponents-react";
-import { useSelector } from "react-redux";
-import { movieList } from "../../features/movies/moviesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchId } from "../../features/movies/moviesById";
+import { eraseList, movieList } from "../../features/movies/moviesSlice";
 import "./MovieList.scss";
 
 function MoviesList() {
   const list = useSelector(movieList);
+  const dispatch = useDispatch();
   console.log(list);
   return (
     <List className="ListWrapper">
-      {list ? (
+      {list.length !== 0 ? (
         list.map((movie) => {
           return (
             <StandardListItem
@@ -16,7 +18,10 @@ function MoviesList() {
               children={movie.Title}
               additionalText={movie.Year}
               key={movie.imdbID}
-              onClick={() => alert(movie.imdbID)}
+              onClick={() => {
+                dispatch(eraseList());
+                dispatch(fetchId(movie.imdbID));
+              }}
             />
           );
         })

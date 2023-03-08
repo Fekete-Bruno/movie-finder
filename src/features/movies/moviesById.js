@@ -17,7 +17,11 @@ export const fetchId = createAsyncThunk("movies/fetchId", async (id) => {
 export const movieId = createSlice({
   name: "movieId",
   initialState,
-  reducers: {},
+  reducers: {
+    eraseInfo(state) {
+      state.info = {};
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchId.pending, (state, action) => {
@@ -25,10 +29,12 @@ export const movieId = createSlice({
       })
       .addCase(fetchId.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.list = action.payload;
+        state.info = action.payload;
       });
   },
 });
+
+export const { eraseInfo } = movieId.actions;
 
 export const movieInfo = (state) => state.movieId.info;
 
